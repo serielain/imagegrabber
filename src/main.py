@@ -57,7 +57,7 @@ try:
                 image_urls.add(image_url)
         print(f"Number of URLs: {len(image_urls)}")
 except WebDriverException:
-    print("Browser closed. Saving URLs...")
+    print("Browser closed. Starting to process the image URLs...")
 
 # Create or open a .txt file to save the modified image URLs
 with open("changed_list.txt", "w") as file:
