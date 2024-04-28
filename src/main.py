@@ -17,7 +17,7 @@ class NoNewImageException(Exception):
 
 
 #make sure you change the URL and the folder path to your own
-default_type = "pinterest" #currently only pinterest is supported by default
+default_type = "pinterest" #in this release only pinterest is supported
 default_url = "PASTE YOUR PINTEREST URL HERE if you dont use the parser"
 default_folder_path = "PASTE YOUR FOLDER PATH HERE if you dont use the parser"
 
@@ -140,7 +140,7 @@ with open("changed_list.txt", "r") as file:
 
     
 
-def check_and_redownload_images():
+def check_and_redownload_images_pinterest():
     # Read the modified image URLs from the .txt file
     with open("changed_list.txt", "r") as file:
         for line in file:
@@ -186,7 +186,7 @@ def count_elements_in_folder(folder_path):
     return len(os.listdir(folder_path))
 
 # Call the function to check and re-download images
-check_and_redownload_images()
+check_and_redownload_images_pinterest()
 
 # Call the function and print the result
 element_count = count_elements_in_folder(folder_path)
