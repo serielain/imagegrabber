@@ -15,7 +15,7 @@ from selenium.common.exceptions import WebDriverException
 
 #make sure you change every Y:\\grabber and Y:\grabber to your own path
 # Define the URL of the webpage you want to scrape
-url = "URL GOES HERE"
+url = "https://www.pinterest.de/fishinjapanese/coole-pics/"
 
 # Create a new Firefox browser instance
 driver = webdriver.Firefox()
@@ -92,7 +92,7 @@ with open("changed_list.txt", "r") as file:
         with open(save_path, "wb") as image_file:
             image_file.write(image_response.content)
         image_counter += 1
-        print(f"{image_counter}downloaded: {image_name}")
+        print(f"Number {image_counter} / {len(image_urls)} downloaded: {image_name}")
 
     
 
@@ -112,7 +112,7 @@ def check_and_redownload_images():
                     img.verify()
                 except (IOError, SyntaxError) as e:
                     print(f"Invalid image: {image_name}")
-                    # If the image is invalid, re-download it with "600x" instead of "originals"
+                    # If the image is invalid, re-download it with "564x" instead of "originals"
                     redownload_url = image_url.replace("originals", "564x")
                     redownload_image(redownload_url, save_path)
             else:
@@ -146,4 +146,4 @@ check_and_redownload_images()
 
 # Call the function and print the result
 element_count = count_elements_in_folder("Y:\\grabber")
-print(f"Number of elements: {element_count}")
+print(f"Number of Elements in Folder: {element_count}")
