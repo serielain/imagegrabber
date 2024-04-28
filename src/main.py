@@ -15,13 +15,16 @@ from selenium.common.exceptions import WebDriverException
 
 #make sure you change every Y:\\grabber and Y:\grabber to your own path
 # Define the URL of the webpage you want to scrape
-url = "https://www.pinterest.de/fishinjapanese/coole-pics/"
-
+url = "https://www.pinterest.de/fishinjapanese/dark-asthetic-drawn-girl/"
+folder_path = "Y:\\grabber"
 # Create a new Firefox browser instance
 driver = webdriver.Firefox()
 
 # Navigate to the webpage
 driver.get(url)
+
+#counts the time it takes to run the code
+start_time = time.time()
 
 # Set of image URLs
 image_urls = set()
@@ -83,7 +86,7 @@ with open("changed_list.txt", "r") as file:
     for line in file:
         image_url = line.strip()
         image_name = image_url.split("/")[-1]
-        save_path = os.path.join("Y:\grabber", image_name)
+        save_path = os.path.join(folder_path, image_name)
 
         # Send a GET request to download the image
         image_response = requests.get(image_url)
@@ -102,7 +105,7 @@ def check_and_redownload_images():
         for line in file:
             image_url = line.strip()
             image_name = image_url.split("/")[-1]
-            save_path = os.path.join("Y:\\grabber", image_name)
+            save_path = os.path.join(folder_path, image_name)
 
             # Check if the image file exists and is valid
             if os.path.isfile(save_path):
@@ -145,5 +148,10 @@ def count_elements_in_folder(folder_path):
 check_and_redownload_images()
 
 # Call the function and print the result
-element_count = count_elements_in_folder("Y:\\grabber")
+element_count = count_elements_in_folder(folder_path)
 print(f"Number of Elements in Folder: {element_count}")
+
+#time to run the code
+end_time = time.time()
+total_time = end_time - start_time
+print(f'The total time used to run the code is: {total_time} seconds')
