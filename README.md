@@ -1,4 +1,4 @@
-# imagegrabber
+# Working Pinterest Board Imagegrabber
 Ver. 1.0.0
 working pinterest image grabber.
 
