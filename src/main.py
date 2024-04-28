@@ -140,7 +140,7 @@ with open("changed_list.txt", "r") as file:
 
     
 
-def check_and_redownload_images():
+def check_and_redownload_images_pinterest():
     # Read the modified image URLs from the .txt file
     with open("changed_list.txt", "r") as file:
         for line in file:
@@ -186,7 +186,7 @@ def count_elements_in_folder(folder_path):
     return len(os.listdir(folder_path))
 
 # Call the function to check and re-download images
-check_and_redownload_images()
+check_and_redownload_images_pinterest()
 
 # Call the function and print the result
 element_count = count_elements_in_folder(folder_path)
