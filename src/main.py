@@ -15,7 +15,7 @@ from selenium.common.exceptions import WebDriverException
 
 #make sure you change every Y:\\grabber and Y:\grabber to your own path
 # Define the URL of the webpage you want to scrape
-url = "https://www.pinterest.de/USER/LISTNAME"
+url = "URL GOES HERE"
 
 # Create a new Firefox browser instance
 driver = webdriver.Firefox()
@@ -25,23 +25,26 @@ driver.get(url)
 
 # Set of image URLs
 image_urls = set()
-
+scroll_position = 0
+time.sleep(5)
 try:
-    # Scroll and extract image URLs
-    for _ in range(100):  # Adjust this value based on your needs
-        # Scroll to the bottom of the page
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        time.sleep(2)  # Wait for the page to load
+    # Scroll and extract image URLs 
+    for _ in range(9999999999):  # Adjust this value based on your needs
+        # Scroll down the page in steps
+        for _ in range(2):  # Adjust this value based on your needs (default:2)
+            scroll_position += 150  # Scroll down 150 default
+            driver.execute_script(f"window.scrollTo(0, {scroll_position});")
+            time.sleep(0.05)  # Adjust this value based on your needs
 
         # Click the "Mehr anzeigen" button if it appears
         try:
-            button = WebDriverWait(driver, 2).until(
+            button = WebDriverWait(driver, 0).until(
                 EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Mehr anzeigen']"))
             )
             button.click()
         except TimeoutException:
             print("No 'Mehr anzeigen' button found")
-        time.sleep(5)
+        time.sleep(0)
 
 
         # Parse the webpage's content
@@ -64,7 +67,7 @@ with open("changed_list.txt", "w") as file:
     # Save each unique image URL to the .txt file
     for image_url in image_urls:
         # Replace "75x75_RS" and "236x" with "originals"
-        modified_url = image_url.replace("75x75_RS", "originals").replace("236x", "originals")
+        modified_url = image_url.replace("75x75_RS", "originals").replace("140x140_RS", "originals").replace("170x", "originals").replace("222x", "originals").replace("236x", "originals").replace("280x280_RS", "originals").replace("1200x", "originals").replace("236x", "originals").replace("236x", "originals")
         file.write(modified_url + "\n")
 
 print("All modified image URLs saved successfully!")
