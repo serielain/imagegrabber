@@ -13,10 +13,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import WebDriverException
 
-#make sure you change every Y:\\grabber and Y:\grabber to your own path
-# Define the URL of the webpage you want to scrape
-url = "https://www.pinterest.de/fishinjapanese/dark-asthetic-drawn-girl/"
-folder_path = "Y:\\grabber"
+#make sure you change the URL and the folder path to your own
+url = "Pinterest Board URL HERE"
+folder_path = "Y:\\EXAMPLEFOLDER"
 # Create a new Firefox browser instance
 driver = webdriver.Firefox()
 
