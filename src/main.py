@@ -1,8 +1,6 @@
 import os
-import requests
 from bs4 import BeautifulSoup
 from PIL import Image
-import os
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -19,6 +17,7 @@ class NoNewImageException(Exception):
 
 
 #make sure you change the URL and the folder path to your own
+default_type = "pinterest" #currently only pinterest is supported by default
 default_url = "PASTE YOUR PINTEREST URL HERE if you dont use the parser"
 default_folder_path = "PASTE YOUR FOLDER PATH HERE if you dont use the parser"
 
@@ -26,6 +25,7 @@ default_folder_path = "PASTE YOUR FOLDER PATH HERE if you dont use the parser"
 parser = argparse.ArgumentParser()
 
 # Add the --url, --folder_path, and --retries arguments
+parser.add_argument("--type", default=default_url, help="The URL to download images from (default: Pinterest)")
 parser.add_argument("--url", default=default_url, help="The URL to download images from")
 parser.add_argument("--folder_path", default=default_folder_path, help="The path to the folder where the images will be saved")
 parser.add_argument("--retries", type=int, default=25, help="The number of times to retry downloading an image")
@@ -109,8 +109,9 @@ except NoNewImageException:
 with open("changed_list.txt", "w") as file:
     # Save each unique image URL to the .txt file
     for image_url in image_urls:
-        # Replace "75x75_RS" and "236x" with "originals"
-        modified_url = image_url.replace("75x75_RS", "originals").replace("140x140_RS", "originals").replace("170x", "originals").replace("222x", "originals").replace("236x", "originals").replace("280x280_RS", "originals").replace("1200x", "originals").replace("236x", "originals").replace("236x", "originals")
+        if(default_type == "pinterest"):
+            # Replace "75x75_RS" and "236x" with "originals"
+            modified_url = image_url.replace("75x75_RS", "originals").replace("140x140_RS", "originals").replace("170x", "originals").replace("222x", "originals").replace("236x", "originals").replace("280x280_RS", "originals").replace("1200x", "originals").replace("236x", "originals").replace("236x", "originals")
         file.write(modified_url + "\n")
 
 print("All modified image URLs saved successfully!")
