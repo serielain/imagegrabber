@@ -78,6 +78,7 @@ with open("changed_list.txt", "r") as file:
 print(f"Number of saved URLs: {url_count}")
 
 # Read the modified image URLs from the .txt file and download each image
+image_counter = 0
 with open("changed_list.txt", "r") as file:
     for line in file:
         image_url = line.strip()
@@ -90,8 +91,8 @@ with open("changed_list.txt", "r") as file:
         # Save the image to the specified directory
         with open(save_path, "wb") as image_file:
             image_file.write(image_response.content)
-
-        print(f"Downloaded: {image_name}")
+        image_counter += 1
+        print(f"{image_counter}downloaded: {image_name}")
 
     
 
