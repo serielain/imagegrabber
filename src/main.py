@@ -13,9 +13,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import WebDriverException
 
+class NoNewImageException(Exception):
+    pass
+
+
 #make sure you change the URL and the folder path to your own
-url = "Pinterest Board URL HERE"
-folder_path = "Y:\\EXAMPLEFOLDER"
+url = "PASTE YOUR PINTEREST URL HERE"
+folder_path = "PASTE YOUR FOLDER PATH HERE"
+
 # Create a new Firefox browser instance
 driver = webdriver.Firefox()
 
@@ -29,9 +34,13 @@ start_time = time.time()
 image_urls = set()
 scroll_position = 0
 time.sleep(5)
+
+no_new_image_counter = 0 # Counter for the number of retries with no new image
+no_new_image_limit = 30 # Maximum number of retries with no new image
+
 try:
     # Scroll and extract image URLs 
-    for _ in range(9999999999):  # Adjust this value based on your needs
+    while(True):
         # Scroll down the page in steps
         for _ in range(2):  # Adjust this value based on your needs (default:2)
             scroll_position += 150  # Scroll down 150 default
@@ -43,11 +52,13 @@ try:
             button = WebDriverWait(driver, 0).until(
                 EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Mehr anzeigen']"))
             )
+            print("Clicked 'Mehr anzeigen' button")
             button.click()
         except TimeoutException:
-            print("No 'Mehr anzeigen' button found")
-        time.sleep(0)
+            time.sleep(0)
 
+        # image urls before adding new ones
+        image_counter_prev = len(image_urls)
 
         # Parse the webpage's content
         soup = BeautifulSoup(driver.page_source, "html.parser")
@@ -61,9 +72,22 @@ try:
             if image_url:
                 image_urls.add(image_url)
         print(f"Number of URLs: {len(image_urls)}")
+        # Check if there are no new images
+        if (len(image_urls) == image_counter_prev):
+            no_new_image_counter += 1
+            if no_new_image_counter >= no_new_image_limit:
+                raise NoNewImageException
+        else:
+            no_new_image_counter = 0
+        if(no_new_image_counter != 0):
+            print(f"No new images found after {no_new_image_counter} retries")
+
+
 except WebDriverException:
     print("Browser closed. Starting to process the image URLs...")
-
+except NoNewImageException:
+    print(f"No new images were found after {no_new_image_counter} retries. Starting to process the image URLs...")
+    driver.quit()
 # Create or open a .txt file to save the modified image URLs
 with open("changed_list.txt", "w") as file:
     # Save each unique image URL to the .txt file
@@ -153,4 +177,4 @@ print(f"Number of Elements in Folder: {element_count}")
 #time to run the code
 end_time = time.time()
 total_time = end_time - start_time
-print(f'The total time used to run the code is: {total_time} seconds')
+print(f'The total time used to run the code is: {total_time:.2f} seconds')
