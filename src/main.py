@@ -17,7 +17,7 @@ class NoNewImageException(Exception):
 
 
 #make sure you change the URL and the folder path to your own
-default_type = "pinterest" #currently only pinterest is supported by default
+default_type = "pinterest" #in this release only pinterest is supported
 default_url = "PASTE YOUR PINTEREST URL HERE if you dont use the parser"
 default_folder_path = "PASTE YOUR FOLDER PATH HERE if you dont use the parser"
 
