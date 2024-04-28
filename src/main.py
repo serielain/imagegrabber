@@ -12,14 +12,31 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import WebDriverException
+import argparse
 
 class NoNewImageException(Exception):
     pass
 
 
 #make sure you change the URL and the folder path to your own
-url = "PASTE YOUR PINTEREST URL HERE"
-folder_path = "PASTE YOUR FOLDER PATH HERE"
+default_url = "PASTE YOUR PINTEREST URL HERE if you dont use the parser"
+default_folder_path = "PASTE YOUR FOLDER PATH HERE if you dont use the parser"
+
+# Create an argument parser
+parser = argparse.ArgumentParser()
+
+# Add the --url, --folder_path, and --retries arguments
+parser.add_argument("--url", default=default_url, help="The URL to download images from")
+parser.add_argument("--folder_path", default=default_folder_path, help="The path to the folder where the images will be saved")
+parser.add_argument("--retries", type=int, default=25, help="The number of times to retry downloading an image")
+
+# Parse the command-line arguments
+args = parser.parse_args()
+
+# Get the values of the arguments
+url = args.url
+folder_path = args.folder_path
+retries = args.retries
 
 # Create a new Firefox browser instance
 driver = webdriver.Firefox()
